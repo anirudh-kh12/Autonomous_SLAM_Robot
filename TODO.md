@@ -2,27 +2,27 @@
 
 ## Phase 0 — Project setup
 
-- [ ] Create project folder.
-- [ ] Create project directory structure.
-- [ ] Create README.md.
-- [ ] Create PROGRESS_LOG.md.
-- [ ] Create DECISIONS_LOG.md.
-- [ ] Create HARDWARE_INVENTORY.md.
-- [ ] Create BOM.md.
-- [ ] Create PROJECT_PLAN.md.
-- [ ] Create TODO.md.
-- [ ] Set up Git version control.
-- [ ] Finish MATLAB toolbox installation.
-- [ ] Verify required MATLAB functions.
+- [DONE] Create project folder.
+- [DONE] Create project directory structure.
+- [DONE] Create README.md.
+- [DONE] Create PROGRESS_LOG.md.
+- [DONE] Create DECISIONS_LOG.md.
+- [DONE] Create HARDWARE_INVENTORY.md.
+- [DONE] Create BOM.md.
+- [DONE] Create PROJECT_PLAN.md.
+- [DONE] Create TODO.md.
+- [DONE] Set up Git version control.
+- [DONE] Finish MATLAB toolbox installation.
+- [DONE] Verify required MATLAB functions.
 - [ ] Inspect IoT lab inventory.
 - [ ] Record printer models and supported materials.
 
 ## Phase 1 — MATLAB environment
 
-- [ ] Confirm Robotics System Toolbox availability.
-- [ ] Confirm Navigation Toolbox availability.
+- [DONE] Confirm Robotics System Toolbox availability.
+- [DONE] Confirm Navigation Toolbox availability.
 - [ ] Run a basic robotics example.
-- [ ] Create the MATLAB simulation folder.
+- [DONE] Create the MATLAB simulation folder.
 - [ ] Start the differential-drive robot simulation.
 
 ## Current priority

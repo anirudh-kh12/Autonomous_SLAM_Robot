@@ -46,6 +46,47 @@ This file records actual project progress. Update it after meaningful work sessi
 5. Inspect the IoT lab inventory.
 6. Begin the first differential-drive simulation.
 
+### 2026-10-14 — MATLAB toolbox verification
+
+**Work completed**
+- Installed or enabled the required MATLAB robotics products.
+- Verified that MATLAB R2026a Update 5 lists Robotics System Toolbox, Navigation Toolbox and ROS Toolbox.
+- Verified that the following functions resolve to file paths:
+  - `lidarSLAM`
+  - `differentialDriveKinematics`
+  - `occupancyMap`
+  - `controllerPurePursuit`
+  - `plannerAStarGrid`
+
+**Result**
+- MATLAB environment is ready for initial robotics experiments.
+- Function discovery has been verified, but successful execution of a complete simulation is still pending.
+
+**Next actions**
+1. Finish local Git setup.
+2. Create the GitHub repository.
+3. Record the first commit.
+4. Begin the first MATLAB differential-drive simulation.
+
+### 2026-10-14 — GitHub repository setup
+
+**Work completed**
+- Created the project directory and documentation structure.
+- Initialized local Git version control.
+- Created the GitHub repository.
+- Confirmed that the repository is visible on GitHub.
+- Prepared the repository for collaboration with the second teammate.
+
+**Result**
+- Project documentation and version control are established.
+- Teammate invitation is planned; collaboration becomes active after the invitation is accepted.
+
+**Next actions**
+1. Begin the first MATLAB simulation.
+2. Understand differential-drive robot motion.
+3. Record simulation results after testing.
+4. Inspect available IoT laboratory hardware.
+
 ## Future Session Template
 
 ### YYYY-MM-DD — Session title
