@@ -87,6 +87,39 @@ This file records actual project progress. Update it after meaningful work sessi
 3. Record simulation results after testing.
 4. Inspect available IoT laboratory hardware.
 
+### 2026-10-14 — Experiment 01: Differential-drive basics
+
+**Objective:** Simulate straight-line motion and turning using differential-drive kinematics.
+
+**File:** `simulation/MATLAB/exp01_differential_drive_basics.m`
+
+**Parameters**
+- Wheelbase: 0.18 m
+- Time step: 0.05 s
+- Simulation duration: 10 s
+- First 5 seconds: both wheels move at 0.15 m/s
+- Remaining 5 seconds: left wheel at 0.08 m/s and right wheel at 0.15 m/s
+
+**Results**
+- MATLAB script executed successfully.
+- Generated robot trajectory and orientation-versus-time plots.
+- Final X position: approximately 1.029 m.
+- Final Y position: approximately 0.401 m.
+- Final orientation: approximately 111.41 degrees.
+
+**Observations**
+- Equal wheel velocities produce straight-line motion.
+- Unequal wheel velocities produce a curved trajectory.
+- The robot's pose is represented by X position, Y position and orientation.
+- The model uses ideal differential-drive kinematics and does not yet include real-world sensor noise, wheel slip or motor dynamics.
+
+**Status:** Completed — initial mathematical simulation verified.
+
+**Next actions**
+1. Investigate the effect of changing wheel velocities and wheelbase.
+2. Learn how robot pose is represented and updated.
+3. Progress to occupancy-grid mapping and path planning after completing the motion-model experiments.
+
 ## Future Session Template
 
 ### YYYY-MM-DD — Session title

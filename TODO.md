@@ -21,9 +21,13 @@
 
 - [DONE] Confirm Robotics System Toolbox availability.
 - [DONE] Confirm Navigation Toolbox availability.
-- [ ] Run a basic robotics example.
+- [DONE] Run a basic robotics example.
 - [DONE] Create the MATLAB simulation folder.
-- [ ] Start the differential-drive robot simulation.
+- [DONE] Experiment 01 - Start the differential-drive robot simulation.
+- [ ] Experiment 02 — Compare wheel velocities and turning behaviour.
+- [ ] Experiment 03 — Investigate the effect of wheelbase.
+- [ ] Understand robot pose and coordinate frames.
+- [ ] Begin occupancy-grid mapping.
 
 ## Current priority
 
