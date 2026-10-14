@@ -1,0 +1,92 @@
+# Progress Log — Autonomous SLAM Robot
+
+This file records actual project progress. Update it after meaningful work sessions, experiments, installations, tests and design changes.
+
+## Current Status
+
+- **Project phase:** Phase 0 — Project organization and inventory
+- **Current milestone:** MATLAB robotics environment setup
+- **Last updated:** 2026-10-14
+- **MATLAB version:** R2026a Update 5
+- **Operating system:** Windows 11 Pro Insider Preview
+- **MATLAB installation:** MATLAB and Control System Toolbox were listed by `ver`. Robotics System Toolbox and Navigation Toolbox installation is in progress.
+- **ROS 2:** Not yet installed or configured.
+- **Physical robot:** Not yet assembled.
+- **Web dashboard:** Not yet implemented.
+
+## Session Log
+
+### 2026-10-14 — Initial project setup
+
+**Work completed**
+- Agreed on the autonomous indoor SLAM mobile robot project direction.
+- Defined warehouse material transport as the primary application.
+- Agreed to use simulation before physical construction.
+- Agreed to develop a web dashboard for live monitoring, manual driving and autonomous navigation.
+- Identified MATLAB, ROS 2, Python, browser technologies and mechanical CAD as candidate tools.
+- Confirmed access to campus MATLAB toolboxes, two 3D printers and some borrowable IoT lab components.
+- Created the initial project scope, architecture and implementation roadmap.
+
+**Environment checks**
+- MATLAB R2026a Update 5 is installed.
+- `ver` listed MATLAB and Control System Toolbox.
+- Initial checks for `lidarSLAM`, `differentialDriveKinematics`, `occupancyMap`, `controllerPurePursuit`, `plannerAStarGrid` and `ros2node` returned `not found`.
+
+**Problems or pending work**
+- Required MATLAB robotics products must be installed and verified.
+- Lab hardware inventory has not yet been completed.
+- Exact motor configuration, onboard computer, LiDAR model and budget remain undecided.
+- Linux and ROS 2 learning has not started.
+
+**Next actions**
+1. Finish MATLAB toolbox installation.
+2. Verify required MATLAB functions.
+3. Create the project folder structure.
+4. Create and populate the project documentation files.
+5. Inspect the IoT lab inventory.
+6. Begin the first differential-drive simulation.
+
+## Future Session Template
+
+### YYYY-MM-DD — Session title
+
+**Objective**
+What were we trying to achieve?
+
+**Work completed**
+- 
+
+**Commands, files or components used**
+- 
+
+**Tests performed**
+- 
+
+**Results**
+- 
+
+**Problems encountered**
+- 
+
+**Decisions made**
+- 
+
+**Next actions**
+1. 
+2. 
+3. 
+
+**Evidence**
+Screenshots, plots, test logs, Git commit ID or other relevant references.
+
+---
+
+## Logging Rules
+
+- Record only work that was actually completed.
+- Distinguish between planned, attempted, successful and failed work.
+- Include important error messages and test results.
+- Record component models, versions and calibration values when relevant.
+- Update the current status when a milestone changes.
+- Do not delete failed experiments; record what was learned from them.
+- Keep passwords, access tokens, Wi-Fi credentials and private keys out of the repository.

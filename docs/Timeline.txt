@@ -1,0 +1,45 @@
+W1–2
+Weeks
+
+Phase 1 — Research and setup
+Learn differential-drive kinematics, coordinate frames, occupancy grids, odometry and SLAM. Check MATLAB toolboxes, set up the development environment, shortlist hardware and finalize the test plan.
+
+
+
+W3–4
+Weeks
+
+Phase 2 — Simulation
+Build a virtual room and corridor layout, simulate sensor readings and robot movement, test mapping and implement A* path planning.
+
+
+
+W5–6
+Weeks
+
+Phase 3 — Mechanical and electrical build
+Assemble the chassis, install encoders and LiDAR, wire the motor controller and establish reliable power. Test motor commands and sensor data independently.
+
+
+
+W7–9
+Weeks
+
+Phase 4 — SLAM and localization
+Integrate LiDAR and odometry, generate a real map, tune the system and correct motion-calibration errors.
+
+
+
+W10–11
+Weeks
+
+Phase 5 — Autonomous navigation
+Add goal selection, path planning, safe speed control, dynamic obstacle handling and route replanning.
+
+
+
+W12–14
+Weeks
+
+Phase 6 — Validation and demonstration
+Run repeated trials, collect measurements, compare simulation and real-world behaviour, prepare graphs, report and demonstration video.

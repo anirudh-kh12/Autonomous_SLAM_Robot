@@ -1,0 +1,19 @@
+# MATLAB generated files
+*.asv
+*.m~
+slprj/
+codegen/
+
+# Python environments and cache
+.venv/
+venv/
+__pycache__/
+*.pyc
+
+# Editor and operating system files
+.vscode/
+.DS_Store
+Thumbs.db
+
+# Logs and temporary files
+*.log
