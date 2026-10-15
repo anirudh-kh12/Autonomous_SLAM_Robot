@@ -2,32 +2,50 @@
 
 ## Phase 0 — Project setup
 
-- [DONE] Create project folder.
-- [DONE] Create project directory structure.
-- [DONE] Create README.md.
-- [DONE] Create PROGRESS_LOG.md.
-- [DONE] Create DECISIONS_LOG.md.
-- [DONE] Create HARDWARE_INVENTORY.md.
-- [DONE] Create BOM.md.
-- [DONE] Create PROJECT_PLAN.md.
-- [DONE] Create TODO.md.
-- [DONE] Set up Git version control.
-- [DONE] Finish MATLAB toolbox installation.
-- [DONE] Verify required MATLAB functions.
+- [x] Create project folder.
+- [x] Create project directory structure.
+- [x] Create README.md.
+- [x] Create PROGRESS_LOG.md.
+- [x] Create DECISIONS_LOG.md.
+- [x] Create HARDWARE_INVENTORY.md.
+- [x] Create BOM.md.
+- [x] Create PROJECT_PLAN.md.
+- [x] Create TODO.md.
+- [x] Set up Git version control.
+- [x] Finish MATLAB toolbox installation.
+- [x] Verify required MATLAB functions.
 - [ ] Inspect IoT lab inventory.
 - [ ] Record printer models and supported materials.
 
 ## Phase 1 — MATLAB environment
 
-- [DONE] Confirm Robotics System Toolbox availability.
-- [DONE] Confirm Navigation Toolbox availability.
-- [DONE] Run a basic robotics example.
-- [DONE] Create the MATLAB simulation folder.
-- [DONE] Experiment 01 - Start the differential-drive robot simulation.
-- [ ] Experiment 02 — Compare wheel velocities and turning behaviour.
-- [ ] Experiment 03 — Investigate the effect of wheelbase.
-- [ ] Understand robot pose and coordinate frames.
-- [ ] Begin occupancy-grid mapping.
+- [x] Confirm Robotics System Toolbox availability.
+- [x] Confirm Navigation Toolbox availability.
+- [x] Run a basic robotics example.
+- [x] Create the MATLAB simulation folder.
+- [x] Experiment 01 - Start the differential-drive robot simulation.
+## MATLAB Simulation Experiments
+
+- [x] Experiment 01 — Differential Drive Basics
+- [x] Experiment 02 — Wheel Speed Comparison
+- [x] Experiment 03 — Robot Pose and Coordinate Frames
+- [x] Experiment 04 — Occupancy Grid Creation
+- [x] Experiment 05 — A* Path Planning
+- [x] Experiment 06 — Robot Clearance and Path Smoothing
+- [x] Experiment 07 — Pure Pursuit Path Following
+- [x] Experiment 08 — Pure Pursuit Lookahead Comparison
+- [x] Experiment 09 — Integrate A* Planning with Pure Pursuit
+- [x] Experiment 10 — Navigation Robustness and Obstacle Clearance
+- [x] Experiment 11 — Robot Footprint and Swept-Path Validation
+- [ ] Experiment 12 — Simulated LiDAR and Sensor-Based Mapping
+
+## Upcoming Tasks
+
+- [ ] Run and verify Experiment 12.
+- [ ] Inspect simulated LiDAR measurements and reconstructed occupancy grid.
+- [ ] Compare the reconstructed map with the ground-truth map.
+- [ ] Continue toward LiDAR-based SLAM and localization.
+- [ ] Prepare for the eventual ROS 2 simulation and physical robot integration.
 
 ## Current priority
 
