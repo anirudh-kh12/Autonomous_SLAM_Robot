@@ -120,6 +120,42 @@ This file records actual project progress. Update it after meaningful work sessi
 2. Learn how robot pose is represented and updated.
 3. Progress to occupancy-grid mapping and path planning after completing the motion-model experiments.
 
+### 2026-10-15 — Experiment 02: Effect of wheel velocities
+
+**Objective:** Compare differential-drive motion under four combinations of left and right wheel velocities.
+
+**File:** `simulation/MATLAB/exp02_wheel_speed_comparison.m`
+
+**Cases tested**
+1. Equal forward wheel velocities for straight motion.
+2. Right wheel faster than left for a left turn.
+3. Left wheel faster than right for a right turn.
+4. Equal and opposite wheel velocities for rotation in place.
+
+**Results**
+- MATLAB script executed successfully.
+- Plotted the trajectories of all four motion cases.
+- Plotted robot orientation against time.
+- Observed that equal wheel speeds produce zero angular velocity.
+- Observed that unequal wheel speeds produce curved trajectories.
+- Observed that equal and opposite wheel speeds produce rotation in place in the ideal model.
+
+**Learning outcomes**
+- Understood the relationship between wheel-speed difference and angular velocity.
+- Observed how wheel-speed combinations affect turning direction.
+- Learned that accumulated orientation may exceed the conventional -180 to +180 degree range.
+- Confirmed the basic differential-drive motion equations through simulation.
+
+**Limitations**
+- The simulation uses ideal kinematics without motor dynamics, wheel slip or sensor noise.
+
+**Status:** Completed — four motion cases simulated successfully.
+
+**Next actions**
+1. Investigate the effect of wheelbase on turning.
+2. Understand robot pose and coordinate frames.
+3. Progress toward occupancy-grid mapping and path planning.
+
 ## Future Session Template
 
 ### YYYY-MM-DD — Session title
