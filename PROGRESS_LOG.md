@@ -271,6 +271,19 @@ This file records actual project progress. Update it after meaningful work sessi
 - Recorded a trajectory length of 10.508 m, mean tracking error of 0.032 m and maximum tracking error of 0.073 m.
 - Status: **Completed in simulation; collision checking remains an approximation.**
 
+### Experiment 12 — Simulated LiDAR and Sensor-Based Mapping
+- Created a 10 m × 8 m ground-truth occupancy map with boundary walls and two rectangular obstacles.
+- Simulated a 360-degree LiDAR with 181 beams per pose, using seven known robot poses.
+- Recorded 1,213 LiDAR returns and constructed a basic occupancy-evidence grid.
+- Generated figures for the ground-truth map, LiDAR returns, reconstructed occupancy grid, and ground-truth comparison.
+- Total grid cells: 8,000; observed free cells: 7,010; observed occupied cells: 481; unknown cells: 509.
+- Observed cell coverage: 93.64%.
+- Observed-cell agreement: 89.87%.
+- Occupied-cell precision: 73.18%.
+- Occupied-cell recall among observed ground-truth occupied cells: 35.85%.
+- Ground-truth occupied-cell coverage: 99.49% (982 of 987 cells observed).
+- **Status: Completed as a basic simulated mapping experiment.** Mapping is not yet probabilistic SLAM, and obstacle-cell classification remains limited by the simplified ray-marching approach.
+
 ## Future Session Template
 
 ### YYYY-MM-DD — Session title
