@@ -59,7 +59,7 @@ rayStep = 0.02;
 angles = linspace(-fieldOfView/2, ...
                    fieldOfView/2,numberOfBeams);
 
-%% 4. Robot poses
+%% 4. Define robot poses
 
 % Each row is [x, y, heading in radians]
 robotPoses = [
@@ -72,16 +72,20 @@ robotPoses = [
     1.5, 6.5, -pi/2
 ];
 
-%% 5. Initialize log-odds occupancy grid
+%% 5. Initialize log-odds grid and observation mask
 
-% Zero log-odds means unknown, with probability 0.5.
+% Zero log-odds corresponds to probability 0.5.
 logOdds = zeros(numRows,numCols);
+
+% Track cells traversed by LiDAR rays independently
+% of their occupancy classification.
+observedMask = false(numRows,numCols);
 
 % Evidence update strengths
 freeUpdate = -0.40;
 occupiedUpdate = 0.85;
 
-% Prevent evidence from growing without limit
+% Limit accumulated evidence
 minLogOdds = -4;
 maxLogOdds = 4;
 
@@ -110,15 +114,19 @@ for p = 1:size(robotPoses,1)
                 break;
             end
 
+            % Convert world coordinates to grid indices
             col = floor(pointX*resolution)+1;
             row = floor(pointY*resolution)+1;
 
             col = max(1,min(numCols,col));
             row = max(1,min(numRows,row));
 
+            % Record that the ray visited this cell
+            observedMask(row,col) = true;
+
             if checkOccupancy(trueMap,[pointX,pointY]) > 0
 
-                % A LiDAR return provides occupied evidence
+                % LiDAR hit: add occupied evidence
                 logOdds(row,col) = min(maxLogOdds, ...
                     logOdds(row,col)+occupiedUpdate);
 
@@ -133,15 +141,16 @@ for p = 1:size(robotPoses,1)
 
             else
 
-                % The ray passed through this cell:
-                % accumulate free-space evidence
+                % Ray passed through this cell:
+                % add free-space evidence
                 logOdds(row,col) = max(minLogOdds, ...
                     logOdds(row,col)+freeUpdate);
             end
         end
 
         if ~hitDetected
-            % No hit: traversed cells retain free-space evidence.
+            % Cells traversed before leaving the map or
+            % reaching maxRange retain free-space evidence.
         end
     end
 
@@ -158,39 +167,56 @@ occupancyProbability = ...
 freeThreshold = 0.35;
 occupiedThreshold = 0.65;
 
-% Unknown cells have probabilities between the thresholds
-unknownMask = ...
-    occupancyProbability >= freeThreshold & ...
-    occupancyProbability <= occupiedThreshold;
+% A cell is unknown only if no LiDAR ray visited it
+unknownMask = ~observedMask;
 
-freeMask = occupancyProbability < freeThreshold;
-occupiedMask = occupancyProbability > occupiedThreshold;
+% Classify observed cells
+freeMask = observedMask & ...
+    (occupancyProbability < freeThreshold);
+
+occupiedMask = observedMask & ...
+    (occupancyProbability > occupiedThreshold);
+
+% Observed cells with insufficient evidence for either
+% definite classification are marked uncertain.
+uncertainMask = observedMask & ...
+    (occupancyProbability >= freeThreshold) & ...
+    (occupancyProbability <= occupiedThreshold);
 
 %% 8. Evaluate mapping against ground truth
 
 groundTruthGrid = occupancyMatrix(trueMap) > 0;
 
-observedMask = ~unknownMask;
-
 totalCells = numel(logOdds);
+
 observedCells = sum(observedMask(:));
 unknownCells = sum(unknownMask(:));
 freeCells = sum(freeMask(:));
 occupiedCells = sum(occupiedMask(:));
+uncertainCells = sum(uncertainMask(:));
 
 coveragePercent = 100*observedCells/totalCells;
 
-% Compare classifications only where the mapper classified cells
-predictedOccupied = occupiedMask(observedMask);
-truthOccupied = groundTruthGrid(observedMask);
+% Evaluate agreement only among observed cells with a
+% definite free or occupied classification.
+classifiedMask = freeMask | occupiedMask;
 
-observedAgreement = ...
-    100*mean(predictedOccupied == truthOccupied);
+predictedOccupied = occupiedMask(classifiedMask);
+truthOccupied = groundTruthGrid(classifiedMask);
 
+if ~isempty(predictedOccupied)
+    observedAgreement = ...
+        100*mean(predictedOccupied == truthOccupied);
+else
+    observedAgreement = NaN;
+end
+
+% Confusion counts on definitely classified cells
 truePositive = sum(predictedOccupied & truthOccupied);
 falsePositive = sum(predictedOccupied & ~truthOccupied);
 falseNegative = sum(~predictedOccupied & truthOccupied);
 
+% Occupied-cell precision
 if truePositive+falsePositive > 0
     occupiedPrecision = ...
         truePositive/(truePositive+falsePositive);
@@ -198,6 +224,7 @@ else
     occupiedPrecision = NaN;
 end
 
+% Occupied-cell recall on the evaluated cells
 if truePositive+falseNegative > 0
     occupiedRecall = ...
         truePositive/(truePositive+falseNegative);
@@ -205,7 +232,16 @@ else
     occupiedRecall = NaN;
 end
 
-%% 9. Figure 1: Ground-truth map
+% Ground-truth occupied-cell coverage
+totalGroundTruthOccupied = sum(groundTruthGrid(:));
+
+observedGroundTruthOccupied = ...
+    sum(groundTruthGrid(observedMask));
+
+groundTruthOccupiedCoverage = ...
+    100*observedGroundTruthOccupied/totalGroundTruthOccupied;
+
+%% 9. Figure 1: Ground-truth map and robot poses
 
 figure;
 
@@ -228,8 +264,10 @@ figure;
 show(trueMap);
 hold on;
 
-plot(allScanEndpoints(:,1),allScanEndpoints(:,2), ...
-    'r.','MarkerSize',4);
+if ~isempty(allScanEndpoints)
+    plot(allScanEndpoints(:,1),allScanEndpoints(:,2), ...
+        'r.','MarkerSize',4);
+end
 
 plot(robotPoses(:,1),robotPoses(:,2), ...
     'bo','MarkerFaceColor','b','MarkerSize',6);
@@ -240,7 +278,7 @@ title('Simulated LiDAR Returns');
 
 hold off;
 
-%% 11. Figure 3: Occupancy probability map
+%% 11. Figure 3: Probabilistic occupancy grid
 
 figure;
 
@@ -259,11 +297,19 @@ title('Probabilistic Occupancy Grid');
 
 %% 12. Figure 4: Classified occupancy map
 
-% 0 = unknown, 1 = free, 2 = occupied
+% 0 = unknown, 1 = free, 2 = occupied, 3 = uncertain
 displayGrid = zeros(numRows,numCols);
 
 displayGrid(freeMask) = 1;
 displayGrid(occupiedMask) = 2;
+displayGrid(uncertainMask) = 3;
+
+mapColors = [
+    0.55,0.55,0.55;  % Unknown: gray
+    0.95,0.95,0.95;  % Free: near-white
+    0.10,0.10,0.10;  % Occupied: dark
+    0.30,0.60,0.90   % Uncertain: blue
+];
 
 figure;
 
@@ -274,15 +320,12 @@ imagesc([cellSize/2,mapWidth-cellSize/2], ...
 axis xy;
 axis equal tight;
 
-colormap([0.55,0.55,0.55; ...
-          0.95,0.95,0.95; ...
-          0.10,0.10,0.10]);
-
-clim([-0.5,2.5]);
+colormap(mapColors);
+clim([-0.5,3.5]);
 
 cb = colorbar;
-cb.Ticks = [0,1,2];
-cb.TickLabels = {'Unknown','Free','Occupied'};
+cb.Ticks = [0,1,2,3];
+cb.TickLabels = {'Unknown','Free','Occupied','Uncertain'};
 
 xlabel('X Position (m)');
 ylabel('Y Position (m)');
@@ -306,11 +349,12 @@ imagesc([cellSize/2,mapWidth-cellSize/2], ...
 axis xy;
 axis equal tight;
 
-colormap(gca,[0.55,0.55,0.55; ...
-              0.95,0.95,0.95; ...
-              0.10,0.10,0.10]);
+colormap(gca,mapColors);
+clim([-0.5,3.5]);
 
-clim([-0.5,2.5]);
+cb = colorbar;
+cb.Ticks = [0,1,2,3];
+cb.TickLabels = {'Unknown','Free','Occupied','Uncertain'};
 
 xlabel('X Position (m)');
 ylabel('Y Position (m)');
@@ -334,13 +378,28 @@ fprintf('Total grid cells: %d\n',totalCells);
 fprintf('Observed cells: %d\n',observedCells);
 fprintf('Free cells: %d\n',freeCells);
 fprintf('Occupied cells: %d\n',occupiedCells);
+fprintf('Uncertain cells: %d\n',uncertainCells);
 fprintf('Unknown cells: %d\n',unknownCells);
 fprintf('Observed coverage: %.2f%%\n',coveragePercent);
 
 fprintf('\nMapping Metrics\n');
 
-fprintf('Observed-cell agreement: %.2f%%\n',observedAgreement);
-fprintf('Occupied-cell precision: %.2f%%\n',occupiedPrecision*100);
-fprintf('Occupied-cell recall: %.2f%%\n',occupiedRecall*100);
+fprintf('Agreement on definitely classified cells: %.2f%%\n', ...
+    observedAgreement);
+
+fprintf('Occupied-cell precision: %.2f%%\n', ...
+    occupiedPrecision*100);
+
+fprintf('Occupied-cell recall: %.2f%%\n', ...
+    occupiedRecall*100);
+
+fprintf('Ground-truth occupied cells: %d\n', ...
+    totalGroundTruthOccupied);
+
+fprintf('Observed ground-truth occupied cells: %d\n', ...
+    observedGroundTruthOccupied);
+
+fprintf('Ground-truth occupied-cell coverage: %.2f%%\n', ...
+    groundTruthOccupiedCoverage);
 
 fprintf('\nExperiment 13 simulation completed.\n');
